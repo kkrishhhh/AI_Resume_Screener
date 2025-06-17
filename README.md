@@ -34,15 +34,14 @@ An AI-powered web app that analyzes uploaded resumes (PDFs), predicts the best-f
 
 ---
 
-### 🖼️ Screenshots
+## 📸 Screenshots
 
-| Upload Page | Result Page |
-|-------------|-------------|
-| ![Upload](screenshots/upload.png) | ![Result](screenshots/result.png) |
+### Upload Page
+![Upload Page](screenshots/upload_page.png)
 
-*📸 Add screenshots to a `screenshots/` folder and update links above.*
+### Result Page
+![Result Page](screenshots/result_page.png)
 
----
 
 ### ⚙️ Run Locally
 
