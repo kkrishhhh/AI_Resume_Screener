@@ -8,10 +8,10 @@ from utils.report_generator import generate_pdf
 from utils.logger import write_log
 import logging
 
-# Setup Flask app
+
 app = Flask(__name__)
 
-# Define folders
+
 UPLOAD_FOLDER = 'uploads'
 REPORT_FOLDER = 'reports'
 LOG_FOLDER = 'logs'
@@ -19,18 +19,18 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(REPORT_FOLDER, exist_ok=True)
 os.makedirs(LOG_FOLDER, exist_ok=True)
 
-# Config paths
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['REPORT_FOLDER'] = REPORT_FOLDER
 
-# Setup logging
+
 logging.basicConfig(
     filename=os.path.join(LOG_FOLDER, 'predictions.log'),
     level=logging.INFO,
     format='%(asctime)s - %(message)s'
 )
 
-# Load model & vectorizer
+
 model = pickle.load(open('model/model.pkl', 'rb'))
 vectorizer = pickle.load(open('model/vectorizer.pkl', 'rb'))
 
@@ -47,29 +47,29 @@ def predict():
     if file.filename == '':
         return 'No selected file'
 
-    # Save uploaded file
+  
     safe_filename = secure_filename(file.filename)
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], safe_filename)
     file.save(file_path)
 
-    # Extract text and predict
+   
     extracted_text = extract_text_from_pdf(file_path)
     input_vector = vectorizer.transform([extracted_text])
     probabilities = model.predict_proba(input_vector)[0]
 
-    # Top 3 roles with confidence
+   
     top_indices = np.argsort(probabilities)[::-1][:3]
     top_roles = [(model.classes_[i], round(probabilities[i] * 100, 2)) for i in top_indices]
 
-    # Top prediction
+   
     prediction, confidence = top_roles[0]
 
-    # Generate report
+   
     report_filename = safe_filename.replace('.pdf', '_report.pdf')
     report_path = os.path.join(app.config['REPORT_FOLDER'], report_filename)
     generate_pdf(prediction, confidence, report_path)
 
-    # Logging
+    
     logging.info(f"{safe_filename} - {prediction} - {confidence:.2f}%")
     write_log(safe_filename, prediction, confidence)
 
