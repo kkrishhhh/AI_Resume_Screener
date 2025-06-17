@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Resume Screener</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    #loader { display: none; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen flex flex-col justify-between">
+
+  <header class="text-center py-6">
+    <h1 class="text-4xl font-bold text-blue-400">AI Resume Screener</h1>
+    <p class="text-sm text-gray-400">🚀 Powered by ML & NLP to guide your career path</p>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center">
+    <div class="bg-gray-900 p-8 rounded-2xl shadow-lg max-w-md w-full border border-gray-700">
+      <form action="/predict" method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+        <input 
+          type="file" 
+          name="resume" 
+          accept=".pdf"
+          class="w-full mb-4 text-gray-200 bg-gray-800 rounded-lg px-3 py-2 border border-gray-600 cursor-pointer"
+          required
+        />
+        <button 
+          id="submitBtn"
+          type="submit"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg transition duration-300"
+        >
+          Upload Resume
+        </button>
+
+        <!-- Spinner -->
+        <div id="loader" class="text-center mt-4">
+          <svg class="animate-spin h-6 w-6 mx-auto text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <p class="text-sm text-gray-400 mt-2">Processing your resume...</p>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="text-center text-sm text-gray-500 pb-4">
+    Made by <span class="text-white font-medium">Krishna Thakur</span> • 
+    <a href="https://www.linkedin.com/in/krishna-thakur-6a6786293" target="_blank" class="text-blue-400 hover:underline">LinkedIn</a>
+  </footer>
+
+  <script>
+    function showLoader() {
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('loader').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
+
+

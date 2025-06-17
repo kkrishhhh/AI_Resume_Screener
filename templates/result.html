@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prediction Result</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .fade-in {
+      animation: fadeIn 0.8s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen flex flex-col justify-between">
+
+  <main class="flex-grow flex items-center justify-center px-4">
+    <div class="bg-gray-900 p-8 rounded-2xl shadow-2xl max-w-lg w-full text-center border border-gray-700 fade-in">
+      <h2 class="text-3xl font-bold text-green-400 mb-4">🎯 Prediction Result</h2>
+
+      <p class="text-lg text-gray-300">You are best suited for:</p>
+      <p class="text-2xl font-bold text-blue-300 mt-2 mb-1">{{ prediction }} 💼</p>
+      <p class="text-sm text-gray-400 mb-4">Confidence Score: <span class="text-white font-semibold">{{ confidence }}%</span></p>
+
+      <hr class="border-gray-600 my-4" />
+
+      <p class="text-md text-gray-300 font-semibold mb-2">📊 Top 3 Role Predictions</p>
+      <ul class="text-left text-sm text-gray-200 space-y-2 mb-6">
+        {% for role, score in top_roles %}
+          <li class="flex justify-between px-2">
+            <span>{{ loop.index }}. {{ role }}</span>
+            <span class="text-blue-400 font-medium">{{ score }}%</span>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <a href="{{ url_for('download_report', filename=report_filename) }}" 
+         class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 mb-4">
+         ⬇️ Download PDF Report
+      </a>
+
+      <a href="/" 
+         class="inline-block text-blue-400 underline hover:text-blue-600 transition">
+         ← Back to Upload
+      </a>
+    </div>
+  </main>
+
+  <footer class="text-center text-sm text-gray-500 pb-4">
+    Made by <span class="text-white font-medium">Krishna Thakur</span> • 
+    <a href="https://www.linkedin.com/in/krishna-thakur-6a6786293" target="_blank" class="text-blue-400 hover:underline">LinkedIn</a>
+  </footer>
+</body>
+</html>
